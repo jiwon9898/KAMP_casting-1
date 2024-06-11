@@ -49,7 +49,7 @@ def base_dashboard(make_chart, features, resolution: str):
 
     # Streamlit에서 날짜 범위 선택 위젯을 가로로 배치
     # 도넛 차트
-    col1, col2 = st.columns(2)
+    col1, col2, col3 = st.columns(3)
     with col1:
         start_date = st.date_input('시작 날짜', value=features[x_col].min())
         start_date = pd.to_datetime(start_date)
@@ -57,9 +57,15 @@ def base_dashboard(make_chart, features, resolution: str):
     with col2:
         end_date = st.date_input('종료 날짜', value=features[x_col].max())
         end_date = pd.to_datetime(end_date)
+        
+    with col3:
+        unique_mold_codes = features['mold_code'].unique()
+        selected_mold_code = st.multiselect('Mold Code 선택', unique_mold_codes)
+        
 
     # 선택한 날짜 범위에 맞게 데이터 필터링
-    filtered_data = features[features[x_col].between(start_date, end_date)]
+    filtered_data = features[(features[x_col].between(start_date, end_date)) & 
+                             (features['mold_code'].isin(selected_mold_code))]
     ## 선택 기간 정상품 비율
     pass_ratio = filtered_data['pass_count'].sum() / filtered_data['count'].sum()
     ## 선택 기간 불량품 비율

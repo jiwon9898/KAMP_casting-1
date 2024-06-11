@@ -16,7 +16,7 @@ def main():
     make_chart = MakeChart()
 
     # 대시보드 생성
-    key_cols = ['date','weekday']
+    key_cols = ['date','weekday','mold_code']
     features = feature_engineer.create_features(data_mart, key_cols)
     base_dashboard(make_chart, features, resolution='daily')
     
