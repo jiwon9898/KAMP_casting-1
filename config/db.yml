@@ -1,0 +1,6 @@
+db_config:
+    host: "localhost" #"172.24.0.3"
+    port: "23306"
+    user: "myuser"
+    password: "mypassword"
+    database: "KAMP"
